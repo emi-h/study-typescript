@@ -1,8 +1,14 @@
-const foo = (id: number, name: string) => {
-    return 0;
+type User = {
+    name: string;
+    age: number | null;
+    country?: "US" | "UK" | "JP";
+}
+// TypeScript標準
+// 第二引数でほしい方を選択
+type OmitUser = Omit<User, "age">;
+
+const user: OmitUser = {
+    name: "emi",
+    // ageはOmitしているのでエラー
+    age: 20,
 };
-
-type Return<T> = T extends (...args: [infer U, ...any[]]) => any ? U : never;
-
-type Foo = Return<typeof foo>;
-// Only the first argument will be taken:number
