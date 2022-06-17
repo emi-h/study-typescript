@@ -1,13 +1,8 @@
-type Props = {
-    id: string;
-    name: string;
-    age: number;
+const foo = (id: number, name: string) => {
+    return 0;
 };
-// stringだけ取り出したい時にconditionalを使う
-type Filter<T, U> = {
-    [K in keyof T]: T[K] extends U ? K : never;
-}[keyof T];
 
-type stringKeys = Filter<Props, string>;
-type numberKeys = Filter<Props, number>;
-type booleanKeys = Filter<Props, boolean>;
+type Return<T> = T extends (...args: [infer U, ...any[]]) => any ? U : never;
+
+type Foo = Return<typeof foo>;
+// Only the first argument will be taken:number
