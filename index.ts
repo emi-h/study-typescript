@@ -1,14 +1,15 @@
+import { PartialDeep } from "type-fest";
 type User = {
     name: string;
     age: number | null;
-    country?: "US" | "UK" | "JP";
-}
-// TypeScript標準
-// 第二引数でほしい方を選択
-type OmitUser = Omit<User, "age">;
+    address: {
+        country: "US" | "UK" | "JP";
+    }
+};
 
-const user: OmitUser = {
+type PartialUser = PartialDeep<User>;
+
+const user: PartialUser = {
     name: "emi",
-    // ageはOmitしているのでエラー
-    age: 20,
+    address: {}
 };
