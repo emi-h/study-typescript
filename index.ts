@@ -1,17 +1,13 @@
-const getPriority = <T, K extends keyof T>(obj: T, key: K) => {
-    return obj[key];
+type Props = {
+    id: string;
+    name: string;
+    age: number;
 };
-const setPriority = <T, K extends keyof T>(obj: T, key: K, value: T[K]) => {
-    obj[key] = value;
-};
+// stringだけ取り出したい時にconditionalを使う
+type Filter<T, U> = {
+    [K in keyof T]: T[K] extends U ? K : never;
+}[keyof T];
 
-const obj = {
-    foo: 1,
-    bar: 2,
-    baz: 3,
-};
-
-// const hoge = getPriority(obj, "baz");
-// baz:number
-
-setPriority(obj, "bar", 100);
+type stringKeys = Filter<Props, string>;
+type numberKeys = Filter<Props, number>;
+type booleanKeys = Filter<Props, boolean>;
