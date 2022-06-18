@@ -1,9 +1,5 @@
-declare global {
-    declare namespace NodeJS {
-        interface ProcessEnv {
-            readonly FOO: string;
-        }
-    }
-}
+import { FC } from "react";
 
-export { }
+declare module "react" {
+    type CFC<P = {}> = FC<P & { className?: string }>
+};
