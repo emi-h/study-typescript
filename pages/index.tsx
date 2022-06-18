@@ -1,22 +1,24 @@
 import type { NextPage } from 'next'
-import { useState } from 'react';
+import { ChangeEventHandler, FC, useState } from 'react';
+
+type Todo = { id: number; label: string; isDone: boolean };
 
 const Home: NextPage<{ foo: number }> = (props) => {
   const [text, setText] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-  const toggle = (e) => {
+  const toggle: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTodos((prevTodos) => {
       return prevTodos.map((todo) => {
         if (todo.id === Number(e.target.value)) {
           return { ...todo, isDone: !todo.isDone }
         }
         return todo;
-      })
+      });
     });
   };
 
-  const input = (e) => {
+  const input: ChangeEventHandler<HTMLInputElement> = (e) => {
     setText(e.target.value);
   };
 
@@ -40,14 +42,22 @@ const Home: NextPage<{ foo: number }> = (props) => {
       <ul className='mt-4 y-2'>
         {todos.map((todo) => (
           <li key={todo.id}>
-            <label className='flex items-center gap-x-2'>
-              <input type="checkbox" value={todo.id} checked={todo.isDone} onChange={toggle} />
-              <span>{todo.label}</span>
-            </label>
+            <ListItem todo={todo} toggle={toggle} />
           </li>
         ))}
       </ul>
     </div>
+  )
+}
+
+type ListItemProps = { todo: Todo; toggle: ChangeEventHandler<HTMLInputElement>; }
+
+const ListItem: FC<ListItemProps> = ({ todo, toggle }) => {
+  return (
+    <label className='flex items-center gap-x-2'>
+      <input type="checkbox" value={todo.id} checked={todo.isDone} onChange={toggle} />
+      <span>{todo.label}</span>
+    </label>
   )
 }
 
