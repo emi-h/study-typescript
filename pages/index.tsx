@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { TwitterCard } from '../components/TwitterCard'
 
-const Home: NextPage = () => {
+const Home: NextPage<{ foo: number }> = (props) => {
   return <TwitterCard
     type="retweet"
     retweetedUser="yuta"
